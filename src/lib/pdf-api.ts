@@ -38,6 +38,18 @@ export class PdfApi {
         return res.data;
     }
 
+    public async findFile(id: string): Promise<Buffer> {
+        const options: AxiosRequestConfig = {
+            method: 'GET',
+            baseURL: PdfApi.BASE_URL,
+            url: this.prepareUrl(`/${id}/file`),
+            headers: this.prepareHeaders({}),
+            responseType: 'arraybuffer',
+        };
+        const res = await axios.request(options);
+        return Buffer.from(res.data, 'binary');
+    }
+
     public async create(dto: CreatePdfJobDto): Promise<PdfJob> {
         const options: AxiosRequestConfig = {
             method: 'PUT',
