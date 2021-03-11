@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
+
 import { CreatePdfJobDto } from './models/create-pdf-job.dto';
 import { PdfJob } from './models/pdf-job.model';
 
@@ -42,7 +43,9 @@ export default class PdfApi {
             method: 'PUT',
             baseURL: PdfApi.BASE_URL,
             url: this.prepareUrl(''),
-            headers: this.prepareHeaders({ 'content-type': 'application/json' }),
+            headers: this.prepareHeaders({
+                'content-type': 'application/json',
+            }),
             data: JSON.stringify(dto),
         };
         const res = await axios.request<PdfJob>(options);
@@ -66,7 +69,9 @@ export default class PdfApi {
         return `/api/pdf-jobs/${this.clientId}${path}`;
     }
 
-    private prepareHeaders(headers: { [key: string]: string }): { [key: string]: string } {
+    private prepareHeaders(headers: {
+        [key: string]: string;
+    }): { [key: string]: string } {
         const defaultHeaders = { authorization: this.clientSecret };
         return Object.assign(defaultHeaders, headers);
     }
