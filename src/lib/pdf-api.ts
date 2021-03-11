@@ -3,8 +3,8 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { CreatePdfJobDto } from './models/create-pdf-job.dto';
 import { PdfJob } from './models/pdf-job.model';
 
-export default class PdfApi {
-    private static BASE_URL = 'https://pdfs.ah-oh-com';
+export class PdfApi {
+    private static BASE_URL = 'https://pdfs.ah-oh.com';
 
     private readonly clientId: string = '';
     private readonly clientSecret: string = '';
