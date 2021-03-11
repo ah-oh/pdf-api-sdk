@@ -26,6 +26,7 @@ export interface PdfJob {
     // only when finished
     contentType: string;
     path: string;
+    url: string;
 
     responseUrl?: string;
 
