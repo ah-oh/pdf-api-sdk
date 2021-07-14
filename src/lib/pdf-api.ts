@@ -16,6 +16,19 @@ export class PdfApi {
         this.clientSecret = clientSecret;
     }
 
+    public async setJwt(jwt: string): Promise<any> {
+        const options: AxiosRequestConfig = {
+            method: 'GET',
+            baseURL: PdfApi.BASE_URL,
+            url: `/pdf-api/users/${this.clientId}/set-jwt/${jwt}`,
+
+            headers: this.prepareHeaders({ accept: 'application/json' }),
+        };
+        const res = await axios.request<any>(options);
+
+        return res.data;
+    }
+
     public async findOne(id: string): Promise<PdfJob> {
         const options: AxiosRequestConfig = {
             method: 'GET',
@@ -80,7 +93,7 @@ export class PdfApi {
     }
 
     private prepareUrl(path: string): string {
-        return `/api/pdf-jobs/${this.clientId}${path}`;
+        return `/pdf-api/pdf-jobs/${this.clientId}${path}`;
     }
 
     private prepareHeaders(headers: {
