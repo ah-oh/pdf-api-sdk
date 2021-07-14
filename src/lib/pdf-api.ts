@@ -1,3 +1,5 @@
+import { Stream } from 'stream';
+
 import axios, { AxiosRequestConfig } from 'axios';
 
 import { CreatePdfJobDto } from './models/create-pdf-job.dto';
@@ -38,16 +40,16 @@ export class PdfApi {
         return res.data;
     }
 
-    public async findFile(id: string): Promise<Buffer> {
+    public async findFile(id: string): Promise<Stream> {
         const options: AxiosRequestConfig = {
             method: 'GET',
             baseURL: PdfApi.BASE_URL,
             url: this.prepareUrl(`/${id}/file`),
             headers: this.prepareHeaders({}),
-            responseType: 'arraybuffer',
+            responseType: 'stream',
         };
-        const res = await axios.request(options);
-        return Buffer.from(res.data, 'binary');
+        const res = await axios(options);
+        return res.data;
     }
 
     public async create(dto: CreatePdfJobDto): Promise<PdfJob> {

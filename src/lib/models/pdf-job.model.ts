@@ -8,9 +8,12 @@ export enum PdfJobStatus {
 }
 
 export interface HtmlContent {
-    templateName: string;
+    /** handlebars template */
+    templateName?: string;
+    /** word template */
+    wordItemId?: string;
     content: any;
-    options: PDFOptions;
+    options?: PDFOptions;
 }
 
 export interface PdfPage {
@@ -21,6 +24,9 @@ export interface PdfPage {
 export interface PdfJob {
     _id: string;
     name: string;
+    printerId?: string;
+    directPrint?: boolean;
+    printConfig?: any;
     status: PdfJobStatus;
     pages: PdfPage[];
     // only when finished
@@ -28,9 +34,10 @@ export interface PdfJob {
     path: string;
     url: string;
 
+    email?: string;
     responseUrl?: string;
 
     user: string;
-    createdAt: string;
-    updatedAt: string;
+    createdAt: Date;
+    updatedAt: Date;
 }
