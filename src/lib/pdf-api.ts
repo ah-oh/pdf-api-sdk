@@ -2,6 +2,8 @@ import { Stream } from 'stream';
 
 import axios, { AxiosRequestConfig } from 'axios';
 
+import { BasicMailResponse } from './models/basic-mail-response.model';
+import { CreateBasicMailJobDto } from './models/create-basic-mail-job.dto';
 import { CreatePdfJobDto } from './models/create-pdf-job.dto';
 import { PdfJob } from './models/pdf-job.model';
 
@@ -14,6 +16,23 @@ export class PdfApi {
     constructor(clientId: string, clientSecret: string) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
+    }
+
+    public async sendMail(
+        dto: CreateBasicMailJobDto,
+    ): Promise<BasicMailResponse> {
+        const options: AxiosRequestConfig = {
+            method: 'POST',
+            baseURL: PdfApi.BASE_URL,
+            url: `/pdf-api/mails/${this.clientId}`,
+            headers: this.prepareHeaders({
+                'content-type': 'application/json',
+            }),
+            data: JSON.stringify(dto),
+        };
+        const res = await axios.request<BasicMailResponse>(options);
+
+        return res.data;
     }
 
     public async setJwt(jwt: string): Promise<any> {
